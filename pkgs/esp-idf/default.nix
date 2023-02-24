@@ -31,6 +31,8 @@
 , ninja
 , ncurses5
 , dfu-util
+, llvm-xtensa
+, rust-xtensa
 }:
 
 let
@@ -110,6 +112,9 @@ stdenv.mkDerivation rec {
     ninja
 
     ncurses5
+
+    llvm-xtensa
+    rust-xtensa
 
     dfu-util
   ] ++ toolDerivationsToInclude;

@@ -10,7 +10,17 @@
     overlays.default = import ./overlay.nix;
   } // flake-utils.lib.eachDefaultSystem (system:
     let
-      pkgs = import nixpkgs { inherit system; overlays = [ self.overlays.default ]; };
+      pkgs = import nixpkgs {
+        inherit system;
+        overlays = [ self.overlays.default ];
+        config = {
+          allowBroken = true;
+          permittedInsecurePackages = [
+            "python-2.7.18.6"
+          ];
+        };
+
+      };
     in
     {
       packages = {
@@ -23,7 +33,8 @@
           esp-idf-esp32c6
           esp-idf-esp32h2
           gcc-xtensa-lx106-elf-bin
-          esp8266-rtos-sdk;
+          esp8266-rtos-sdk
+          llvm-xtensa;
       };
 
       devShells = {
@@ -40,4 +51,3 @@
       checks = (import ./tests/build-idf-examples.nix { inherit pkgs; }) // (import ./tests/build-esp8266-example.nix { inherit pkgs; });
     });
 }
-
