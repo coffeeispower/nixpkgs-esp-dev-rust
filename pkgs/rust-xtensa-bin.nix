@@ -1,4 +1,4 @@
-{ version ? "1.67.0.0"
+{ version ? "1.71.0.0"
 , callPackage
 , rust
 , lib
@@ -6,7 +6,7 @@
 , fetchurl
 }:
 let
-  component = import {};
+  component = import { };
   # Remove keys from attrsets whose value is null.
   removeNulls = set:
     removeAttrs set
@@ -23,26 +23,23 @@ let
     # src = 
 
   };
-  mkAggregated = callPackage ./rust/mk-aggregated.nix {};
-  
+  mkAggregated = callPackage ./rust/mk-aggregated.nix { };
+
   selComponents = mkComponentSet {
     inherit version;
-    renames = {};
+    renames = { };
     platform = "x86_64-linux";
-    srcs = {  
+    srcs = {
       rustc = fetchurl {
         url = "https://github.com/esp-rs/rust-build/releases/download/v${version}/rust-${version}-x86_64-unknown-linux-gnu.tar.xz";
-        hash = "sha256-Tk1GQvzlXcMfIkN+yXtDA2BIkK00iKwLGt6eWNlKGsM=";
+        hash = "sha256-UTxvoln/17hvOgMOUt9GgGoweMptlIhk7zpNT96XeDw=";
       };
       rust-src = fetchurl {
         url = "https://github.com/esp-rs/rust-build/releases/download/v${version}/rust-src-${version}.tar.xz";
-        hash = "sha256-XwYp3YpVriakdqBCLGns3Od+2UlLFmr912Z8lq/xzo8=";
+        hash = "sha256-Dn8Ypwen/1i7mzno3XZ0GVzhHsZvKR29AF7HgM15JRM=";
       };
-      
     };
-
   };
-  
 in
 assert stdenv.system == "x86_64-linux";
 mkAggregated {
@@ -52,4 +49,3 @@ mkAggregated {
   availableComponents = selComponents;
   selectedComponents = [ selComponents.rustc selComponents.rust-src ];
 }
-
