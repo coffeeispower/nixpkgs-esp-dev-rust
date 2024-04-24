@@ -1,5 +1,5 @@
 { rev ? "v5.1.2"
-, sha256 ? "sha256-uEf3/3NPH+E39VgQ02AbxTG7nmG5bQlhwk/WcTeAUfg="
+, sha256 ? "sha256-PV03mvYkT35fANr1CuAHV+IkpOTqM0DgtGiPcph5VCs="
 , toolsToInclude ? [
     "xtensa-esp-elf-gdb"
     "riscv32-esp-elf-gdb"
@@ -42,6 +42,7 @@ let
     rev = rev;
     sha256 = sha256;
     fetchSubmodules = true;
+    leaveDotGit = true;
   };
 
   allTools = callPackage (import ./tools.nix) {
